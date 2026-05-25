@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Monetbil Deposit Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <h1>Deposit Funds</h1>
+
+  <input type="number" id="amount" placeholder="Amount (XAF)" />
+
+  <input type="text" id="phone" placeholder="Phone Number" />
+
+  <select id="operator">
+    <option value="CM_MTNMOBILEMONEY">MTN MoMo</option>
+    <option value="CM_ORANGEMONEY">Orange Money</option>
+  </select>
+
+  <button onclick="payNow()">Pay Now</button>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
