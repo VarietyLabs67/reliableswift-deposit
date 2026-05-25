@@ -1,4 +1,4 @@
-function payNow() {
+async function payNow() {
 
     const amount = document.getElementById("amount").value;
     const phone = document.getElementById("phone").value;
@@ -6,27 +6,46 @@ function payNow() {
 
     const serviceKey = "NyoavGYNbAkZ8TkF8iQqa9rqPhcM4Mby";
 
-    const form = document.createElement("form");
-    form.method = "POST";
-    form.action = "https://api.monetbil.com/widget/v2.1/" + serviceKey;
+    const formData = new FormData();
 
-    const fields = {
-        amount: amount,
-        phone: phone,
-        operator: operator,
-        country: "CM",
-        currency: "XAF",
-        locale: "en"
-    };
+    formData.append("amount", amount);
+    formData.append("phone", phone);
+    formData.append("operator", operator);
+    formData.append("country", "CM");
+    formData.append("currency", "XAF");
+    formData.append("locale", "en");
 
-    for (const key in fields) {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = key;
-        input.value = fields[key];
-        form.appendChild(input);
+    try {
+
+        const response = await fetch(
+            "https://api.monetbil.com/widget/v2.1/" + serviceKey,
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+        const data = await response.json();
+
+        console.log(data);
+
+        if (data.success === true && data.payment_url) {
+
+            window.location.href = data.payment_url;
+
+        } else {
+
+            alert("Payment initialization failed");
+
+            console.log(data);
+
+        }
+
+    } catch (error) {
+
+        console.log(error);
+
+        alert("Network error");
+
     }
-
-    document.body.appendChild(form);
-    form.submit();
 }
